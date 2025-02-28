@@ -1,0 +1,23 @@
+---
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+
+var newSite = 'https://graphics.wixsite.com/graphics-for-good'
+const scriptTag = `<script>var newSite = '${newSite}'</script>`;
+---
+<title>VanniAid</title>
+<meta http-equiv="refresh" content={`1; url=${newSite}`}>
+<body set:html={scriptTag} />
+<script>
+    var path = location.pathname;
+    if (path.startsWith('/')) path = path.slice(1)
+    if (path.endsWith('/')) path = path.slice(0, -1);
+    
+    var site = `${newSite}/${path}`;
+    if (site.startsWith('/')) site = site.slice(1)
+    if (site.endsWith('/')) site = site.slice(0, -1)
+
+    var query = location.search
+    
+    location.replace(`${site}${query}`);
+</script>

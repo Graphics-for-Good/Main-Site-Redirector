@@ -6,8 +6,8 @@ var newSite = 'https://graphics-for-good.wixsite.com/graphics-for-good'
 const scriptTag = `<script>var newSite = '${newSite}'</script>`;
 ---
 <title>Graphics for Good</title>
-<!-- <meta http-equiv="refresh" content={`1; url=${newSite}`}> -->
-<!-- <body set:html={scriptTag} /> -->
+<meta http-equiv="refresh" content={`1; url=${newSite}`}>
+<body set:html={scriptTag} />
 <script>
     var path = location.pathname;
     if (path.startsWith('/')) path = path.slice(1)

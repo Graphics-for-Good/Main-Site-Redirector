@@ -42,7 +42,7 @@ async function fetchPaths() {
             if (path.startsWith('/')) path = path.slice(1)
             
             var nTemplate = template
-            nTemplate = nTemplate.replace("var path = ''", `var path = "${path}"`)
+            nTemplate = nTemplate.replace("var path = ''", `var path = "/${path}"`)
 
             var paths = []
             if (path.includes('/')) {

@@ -1,0 +1,23 @@
+---
+var newSite = 'https://graphics-for-good.wixsite.com/graphics-for-good'
+
+var path = "/members"
+if (path) newSite += path
+
+const scriptTag = `<script>var newSite = '${newSite}'</script>`;
+---
+<head>
+    <meta http-equiv="refresh" content={`1; url=${newSite}`}>
+    <title>Members | Graphics For Good</title>
+    <meta type="description" content="Members ListShikha IyerPresident & FounderShikha Iyer is a Senior at Design Tech High School in Redwood City and a Member of Graphics for Good. When she's not working on schoolwork or club prep  she's drawing  reading  or listening to Taylor Swift music on blast.Read MoreIsabelle AndersonWebsite AssistantIsabelle Anderson is a Senior at Design Tech High School in Redwood City and a Member of Graphics for Good. In her free time  she likes to crochet and browse online shopping sites.Read MoreMaya KorenUpcoming WebmasterMaya Koren is a Freshman at Design Tech High School in Redwood City and a Member of Graphics for Good. She's an avid reader and loves drawing and painting with watercolors.Read MoreAmelia ChangMemberAmelia Chang is a Junior at Design Tech High School in Redwood City and a Member of Graphics for Good. In her free time  you'll often see her playing video games or struggling with art.Read MoreLuce DittrichMemberLuce Dittrich is a Junior at Design Tech High School in Redwood City and a Member of Graphics for Good.Read MoreZach MagerMemberZach Mager is a Freshman at Design Tech High School in Redwood City and a Member of Graphics for Good. He likes drawing  watching TV shows  and sewing.Read MoreSayuri RodrigoVice-PresidentSayuri Rodrigo is a Senior at Design Tech High School in Redwood City and a Member of Graphics for Good. She enjoys playing guitar and piano  producing music  and dancing. She also is a big fan of horror movies.Read MoreBeatriz MenesesUpcoming Internal PresidentBeatriz Meneses is a Sophmore at Design Tech High School in Redwood City and a Member of Graphics for Good. She is an avid reader of anything fantasy and hopes to create her own fantasy world someday. In addition  she loves to hone her art skills and hike in the wilderness.Read MoreTyler DecourceyUpcoming SecretaryTyler Decourcey is a Freshman at Design Tech High School in Redwood City and a Member of Graphics for Good. He likes corgis and Minecraft and enjoys ice hockey.Read MoreArianna MinakawaMemberArianna Minakawa is a Freshman at Design Tech High School in Redwood City and a Member of Graphics for Good. In her free time  she enjoys creating art and playing the flute. She also performs at the South San Francisco Civic Ballet's yearly Nutcracker.Read MoreMia TuckerMemberMia Tucker is a Junior at Design Tech High School in Redwood City and a Member of Graphics for Good.Read MoreAdarsh KumarWebsite ManagerAdarsh Kumar is a Senior at Design Tech High School in Redwood City and a Member of Graphics for Good. He enjoys playing the piano  coding  and video games.Read MoreBridget WonUpcoming External PresidentBridget Won is a Junior at Design Tech High School in Redwood City and a Member of Graphics for Good. Most of the time  you'll catch her doing schoolwork or at practice for cross country  but occasionally  you'll see her indulge in digital art or baking an ungodly amount of sweets.Read MoreRobin Solis-RodriguezUpcoming Social Media ManagerRobin Solis-Rodriguez is a Junior at Design Tech High School in Redwood City and a Member of Graphics for Good. When not out on a boat  they like drawing  playing card games  and watching movies.Read MoreLorelai HartmanMemberLorelai Hartman is a Senior at Design Tech High School in Redwood City and a Member of Graphics for Good.Read MoreParker NethMemberParker Neth is a Freshman at Design Tech High School in Redwood City and a Member of Graphics for Good. She likes art  fashion  and crafting.Read More" />
+    <link rel="icon" href="https://www.wix.com/favicon.ico" />
+</head>
+<body set:html={scriptTag} />
+<script>
+    if (newSite.startsWith('/')) newSite = newSite.slice(1)
+    if (newSite.endsWith('/')) newSite = newSite.slice(0, -1)
+
+    var query = location.search
+    
+    location.replace(`${newSite}${query}`);
+</script>

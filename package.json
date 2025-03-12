@@ -9,7 +9,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.1.7"
+    "astro": "^5.1.7",
+    "fast-xml-parser": "^5.0.8"
   },
   "devDependencies": {
     "sass": "^1.83.1"

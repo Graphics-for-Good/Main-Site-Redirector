@@ -6,8 +6,13 @@ if (path) newSite += path
 
 const scriptTag = `<script>var newSite = '${newSite}'</script>`;
 ---
-<title>Graphics for Good</title>
-<meta http-equiv="refresh" content={`1; url=${newSite}`}>
+<head>
+    <title>Graphics for Good</title>
+    <meta http-equiv="refresh" content={`1; url=${newSite}`}>
+    <title>Zach Mager | Graphics For Good</title>
+    <meta type="description" content="< BackZach Magerimager28@dtechhs.orgBay AreaZach Mager is a Freshman at Design Tech High School in Redwood City and a Member of Graphics for Good. He likes drawing  watching TV shows  and sewing.PortfolioPreviousNext" />
+    <link rel="icon" href="https://www.wix.com/favicon.ico" />
+</head>
 <body set:html={scriptTag} />
 <script>
     if (newSite.startsWith('/')) newSite = newSite.slice(1)

@@ -6,8 +6,13 @@ if (path) newSite += path
 
 const scriptTag = `<script>var newSite = '${newSite}'</script>`;
 ---
-<title>Graphics for Good</title>
-<meta http-equiv="refresh" content={`1; url=${newSite}`}>
+<head>
+    <title>Graphics for Good</title>
+    <meta http-equiv="refresh" content={`1; url=${newSite}`}>
+    <title>Arianna Minakawa | Graphics For Good</title>
+    <meta type="description" content="< BackArianna Minakawaaminakawa28@dtechhs.orgBay AreaArianna Minakawa is a Freshman at Design Tech High School in Redwood City and a Member of Graphics for Good. In her free time  she enjoys creating art and playing the flute. She also performs at the South San Francisco Civic Ballet's yearly Nutcracker.PortfolioPreviousNext" />
+    <link rel="icon" href="https://www.wix.com/favicon.ico" />
+</head>
 <body set:html={scriptTag} />
 <script>
     if (newSite.startsWith('/')) newSite = newSite.slice(1)

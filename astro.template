@@ -6,8 +6,9 @@ if (path) newSite += path
 
 const scriptTag = `<script>var newSite = '${newSite}'</script>`;
 ---
-<title>Graphics for Good</title>
-<meta http-equiv="refresh" content={`1; url=${newSite}`}>
+<head>
+    <meta http-equiv="refresh" content={`1; url=${newSite}`}>
+</head>
 <body set:html={scriptTag} />
 <script>
     if (newSite.startsWith('/')) newSite = newSite.slice(1)

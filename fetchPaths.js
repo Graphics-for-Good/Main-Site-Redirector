@@ -1,6 +1,10 @@
-import { XMLParser } from 'fast-xml-parser';
 import fs from 'fs'
 
+import { XMLParser } from 'fast-xml-parser';
+import * as cheerio from 'cheerio';
+import { JSDOM } from 'jsdom'
+
+ 
 var template = fs.readFileSync('./astro.template', 'utf8')
 var existingFiles = fs.readdirSync('./src/pages')
 
@@ -35,14 +39,35 @@ async function fetchPaths() {
 
         if (!Array.isArray(urls)) urls = [urls]
 
-        urls.forEach(url => {
+        urls.forEach(async url => {
             var path = url.loc
+
+            var pageResponse = await fetch(path)
+            var pText = await pageResponse.text()
+
+            var pDom = new JSDOM(pText)
+            var document = pDom.window.document
+            var head = document.head
+
+            var description = document.body.querySelector('.PAGES_CONTAINER')
+            description.querySelectorAll('script, style, meta, link, :empty').forEach(e => e.remove())
+
+            const $ = cheerio.load(description.innerHTML);
+            description = $.text()
+            description = description.replace(/[\n,\r,\r\n]+/g, ' ')
+        
+            var title = head.querySelector('title').textContent
+            var icon = head.querySelector('link[rel="icon"]').href
+
             if (path.startsWith(nSite)) path = path.slice(nSite.length)
             if (path === '') path = '/index'
             if (path.startsWith('/')) path = path.slice(1)
             
             var nTemplate = template
-            nTemplate = nTemplate.replace("var path = ''", `var path = "/${path}"`)
+            nTemplate = nTemplate.replace("var path = ''", `var path = "/${path === 'index' ? '' : path}"`)
+
+            nTemplate = nTemplate.replace('</head>', `    <title>${title}</title>\n    <meta type="description" content="${description}" />\n    <link rel="icon" href="${icon}" />\n</head>`)
+
 
             var paths = []
             if (path.includes('/')) {

@@ -10,15 +10,10 @@ const scriptTag = `<script>var newSite = '${newSite}'</script>`;
 <meta http-equiv="refresh" content={`1; url=${newSite}`}>
 <body set:html={scriptTag} />
 <script>
-    var path = location.pathname;
-    if (path.startsWith('/')) path = path.slice(1)
-    if (path.endsWith('/')) path = path.slice(0, -1);
-    
-    var site = `${newSite}/${path}`;
-    if (site.startsWith('/')) site = site.slice(1)
-    if (site.endsWith('/')) site = site.slice(0, -1)
+    if (newSite.startsWith('/')) newSite = newSite.slice(1)
+    if (newSite.endsWith('/')) newSite = newSite.slice(0, -1)
 
     var query = location.search
     
-    location.replace(`${site}${query}`);
+    location.replace(`${newSite}${query}`);
 </script>

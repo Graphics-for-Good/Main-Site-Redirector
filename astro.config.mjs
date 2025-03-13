@@ -3,7 +3,7 @@ import { defineConfig } from 'astro/config';
 
 import fetchPaths from './fetchPaths.js'
 
-fetchPaths()
+// fetchPaths()
 
 // https://astro.build/config
 export default defineConfig({});

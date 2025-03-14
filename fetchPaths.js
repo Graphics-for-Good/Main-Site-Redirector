@@ -1,4 +1,5 @@
 import fs from 'fs'
+import fetch from 'node-fetch'
 
 import { XMLParser } from 'fast-xml-parser';
 import * as cheerio from 'cheerio';
@@ -9,12 +10,15 @@ var template = fs.readFileSync('./astro.template', 'utf8')
 var existingFiles = fs.readdirSync('./src/pages')
 
 var nSite = 'https://graphics-for-good.wixsite.com/graphics-for-good'
-var sitemap = `${nSite}/sitemap.xml`
+var fName = 'sitemap.xml'
+var sitemap = `${nSite}/${fName}`
 
 async function fetchPaths() {
     var response = await fetch(sitemap)
     var text = await response.text()
     
+    fs.writeFileSync(`./public/${fName}`, text)
+
     const parser = new XMLParser();
     const json = parser.parse(text);
 
@@ -29,9 +33,16 @@ async function fetchPaths() {
     })
 
     nestedSitemaps.forEach(async nSitemap => {
-        var siitemapLoc = nSitemap.loc
-        var nResponse = await fetch(siitemapLoc)
+        var nSitemapLoc = nSitemap.loc
+        var sitemapName = nSitemapLoc
+
+        if (sitemapName.startsWith(nSite)) sitemapName = sitemapName.slice(nSite.length)
+        
+        var nResponse = await fetch(nSitemapLoc)
         var nText = await nResponse.text()
+
+        fs.writeFileSync(`./public/${sitemapName}`, text)
+
         const nParser = new XMLParser();
         var nJson = nParser.parse(nText);
 
@@ -89,4 +100,4 @@ async function fetchPaths() {
     })
 }
 
-export default fetchPaths
+fetchPaths()

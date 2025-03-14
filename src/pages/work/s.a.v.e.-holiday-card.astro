@@ -1,0 +1,23 @@
+---
+var newSite = 'https://graphics-for-good.wixsite.com/graphics-for-good'
+
+var path = "/work/s.a.v.e.-holiday-card"
+if (path) newSite += path
+
+const scriptTag = `<script>var newSite = '${newSite}'</script>`;
+---
+<head>
+    <meta http-equiv="refresh" content={`1; url=${newSite}`}>
+    <title>S.A.V.E. Holiday Card | Graphics For Good</title>
+    <meta type="description" content="S.A.V.E. Holiday CardClient:S.A.V.E.Year:23-24Designer 1:tylerDesigner 2:​​PreviousNext" />
+    <link rel="icon" href="https://www.wix.com/favicon.ico" />
+</head>
+<body set:html={scriptTag} />
+<script>
+    if (newSite.startsWith('/')) newSite = newSite.slice(1)
+    if (newSite.endsWith('/')) newSite = newSite.slice(0, -1)
+
+    var query = location.search
+    
+    location.replace(`${newSite}${query}`);
+</script>

@@ -1,0 +1,23 @@
+---
+var newSite = 'https://graphics-for-good.wixsite.com/graphics-for-good'
+
+var path = "/members/bridget"
+if (path) newSite += path
+
+const scriptTag = `<script>var newSite = '${newSite}'</script>`;
+---
+<head>
+    <meta http-equiv="refresh" content={`1; url=${newSite}`}>
+    <title>Bridget Won | Graphics For Good</title>
+    <meta type="description" content="< BackBridget Wonbwon26@dtechhs.orgBay AreaBridget Won is a Junior at Design Tech High School in Redwood City and a Member of Graphics for Good. Most of the time  you'll catch her doing schoolwork or at practice for cross country  but occasionally  you'll see her indulge in digital art or baking an ungodly amount of sweets.PortfolioPreviousNext" />
+    <link rel="icon" href="https://www.wix.com/favicon.ico" />
+</head>
+<body set:html={scriptTag} />
+<script>
+    if (newSite.startsWith('/')) newSite = newSite.slice(1)
+    if (newSite.endsWith('/')) newSite = newSite.slice(0, -1)
+
+    var query = location.search
+    
+    location.replace(`${newSite}${query}`);
+</script>

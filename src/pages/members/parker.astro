@@ -1,0 +1,23 @@
+---
+var newSite = 'https://graphics-for-good.wixsite.com/graphics-for-good'
+
+var path = "/members/parker"
+if (path) newSite += path
+
+const scriptTag = `<script>var newSite = '${newSite}'</script>`;
+---
+<head>
+    <meta http-equiv="refresh" content={`1; url=${newSite}`}>
+    <title>Parker Neth | Graphics For Good</title>
+    <meta type="description" content="< BackParker Nethpneth28@dtechhs.orgBay AreaParker Neth is a Freshman at Design Tech High School in Redwood City and a Member of Graphics for Good. She likes art  fashion  and crafting.PortfolioPreviousNext" />
+    <link rel="icon" href="https://www.wix.com/favicon.ico" />
+</head>
+<body set:html={scriptTag} />
+<script>
+    if (newSite.startsWith('/')) newSite = newSite.slice(1)
+    if (newSite.endsWith('/')) newSite = newSite.slice(0, -1)
+
+    var query = location.search
+    
+    location.replace(`${newSite}${query}`);
+</script>

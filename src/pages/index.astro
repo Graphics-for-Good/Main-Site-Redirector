@@ -1,0 +1,23 @@
+---
+var newSite = 'https://graphics-for-good.wixsite.com/graphics-for-good'
+
+var path = "/"
+if (path) newSite += path
+
+const scriptTag = `<script>var newSite = '${newSite}'</script>`;
+---
+<head>
+    <meta http-equiv="refresh" content={`1; url=${newSite}`}>
+    <title>Graphics For Good</title>
+    <meta type="description" content="Empowering Non-Profits Through the Power of Design!Transforming Visual Communications with PurposeLearn MoreOur Mission"Our mission is to help create change in the world through design. We strive to provide free design help for nonprofits that support a wide range of causes." - Shikha Iyer  Club FounderRead More                    Our ServicesLogosWe specialize in creating unique and memorable logos that represent the essence of nonprofit organizations. Our designs aim to visually communicate the values and missions of our clients  helping them stand out in a competitive landscape.Social Media GraphicsOur social media graphics are crafted to engage audiences and drive impactful storytelling. We focus on creating visually appealing content that resonates with viewers and enhances the online presence of nonprofits.Educational MaterialsEducational materials play a crucial role in conveying important messages effectively. At Graphics for Good @d.tech  we design educational materials that are engaging  informative  and visually compelling to ensure maximum audience engagement and understanding.Client CollaborationWe believe in close collaboration with our clients to understand their unique needs and goals. Through active engagement and feedback  we ensure that our designs align with the vision and objectives of the nonprofits we support.Creative InnovationInnovation is at the core of our design process. We constantly strive to push creative boundaries  experiment with new ideas  and deliver innovative solutions that help nonprofits create a lasting impact through visual storytelling.Impactful ResultsOur focus is on delivering measurable results that make a difference. By creating visually compelling designs  we help nonprofits amplify their stories  increase engagement  and foster meaningful connections with their target audiences.Explore ServicesInterested in partnering with us?Get in Touchhello@graphics-for-good.comFirst NameLast NameEmailMessageSendThanks for submitting!" />
+    <link rel="icon" href="https://www.wix.com/favicon.ico" />
+</head>
+<body set:html={scriptTag} />
+<script>
+    if (newSite.startsWith('/')) newSite = newSite.slice(1)
+    if (newSite.endsWith('/')) newSite = newSite.slice(0, -1)
+
+    var query = location.search
+    
+    location.replace(`${newSite}${query}`);
+</script>

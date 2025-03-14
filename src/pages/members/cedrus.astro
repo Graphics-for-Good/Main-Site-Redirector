@@ -1,0 +1,23 @@
+---
+var newSite = 'https://graphics-for-good.wixsite.com/graphics-for-good'
+
+var path = "/members/cedrus"
+if (path) newSite += path
+
+const scriptTag = `<script>var newSite = '${newSite}'</script>`;
+---
+<head>
+    <meta http-equiv="refresh" content={`1; url=${newSite}`}>
+    <title>Cedrus Fink | Graphics For Good</title>
+    <meta type="description" content="< BackCedrus Finkcfink27@dtechhs.orgBay AreaCedrus Fink is a Sophomore at Design Tech High School in Redwood City and a Member of Graphics for Good.PortfolioPreviousNext" />
+    <link rel="icon" href="https://www.wix.com/favicon.ico" />
+</head>
+<body set:html={scriptTag} />
+<script>
+    if (newSite.startsWith('/')) newSite = newSite.slice(1)
+    if (newSite.endsWith('/')) newSite = newSite.slice(0, -1)
+
+    var query = location.search
+    
+    location.replace(`${newSite}${query}`);
+</script>

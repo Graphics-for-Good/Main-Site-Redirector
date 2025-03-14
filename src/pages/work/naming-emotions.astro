@@ -1,0 +1,23 @@
+---
+var newSite = 'https://graphics-for-good.wixsite.com/graphics-for-good'
+
+var path = "/work/naming-emotions"
+if (path) newSite += path
+
+const scriptTag = `<script>var newSite = '${newSite}'</script>`;
+---
+<head>
+    <meta http-equiv="refresh" content={`1; url=${newSite}`}>
+    <title>Naming Emotions | Graphics For Good</title>
+    <meta type="description" content="Naming EmotionsClient:S.A.V.E.Year:24-25Designer 1:BeatrizDesigner 2:​This is placeholder text. To change this content  double-click on the element and click Change Content. To manage all your collections  click on the Content Manager button in the Add panel on the left.PreviousNext" />
+    <link rel="icon" href="https://www.wix.com/favicon.ico" />
+</head>
+<body set:html={scriptTag} />
+<script>
+    if (newSite.startsWith('/')) newSite = newSite.slice(1)
+    if (newSite.endsWith('/')) newSite = newSite.slice(0, -1)
+
+    var query = location.search
+    
+    location.replace(`${newSite}${query}`);
+</script>

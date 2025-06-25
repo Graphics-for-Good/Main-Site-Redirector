@@ -10,8 +10,6 @@ async function redirectAway() {
         const region_code = locJson.region_code
         const city = locJson.city
         
-        console.log(continent_code, country_code, region_code, city)
-
         if (continent_code === 'NA' && country_code === 'US' && region_code === 'VA' && city === 'Ashburn') return true
     }
 

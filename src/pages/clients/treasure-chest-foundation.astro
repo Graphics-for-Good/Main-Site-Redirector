@@ -1,19 +1,24 @@
 ---
+import redirectAway from '../scripts/redirectAway.js'
+const res = await redirectAway()
+if (res) {
+    return Astro.redirect('https://google.com')
+}
+
 var newSite = 'https://graphics-for-good.wixsite.com/graphics-for-good'
 
-var path = "/clients/treasure-chest-foundation"
+var path = '/clients/treasure-chest-foundation'
 if (path) newSite += path
-
-const scriptTag = `<script>var newSite = '${newSite}'</script>`;
 ---
 <head>
     <meta http-equiv="refresh" content={`1; url=${newSite}`}>
     <title>Treasure Chest Foundation | Graphics For Good</title>
-    <meta type="description" content="< BackTreasure Chest Foundation​Power in Numbers                    ​Programs                    ​Locations                    ​VolunteersProject GalleryPreviousNext" />
+    <meta name="description" content={`< BackTreasure Chest Foundation​Power in Numbers ​Programs ​Locations ​VolunteersProject GalleryPreviousNext`} />
     <link rel="icon" href="https://www.wix.com/favicon.ico" />
 </head>
-<body set:html={scriptTag} />
-<script>
+<script data-site={newSite}>
+    const newSite = document.currentScript.dataset.site
+
     if (newSite.startsWith('/')) newSite = newSite.slice(1)
     if (newSite.endsWith('/')) newSite = newSite.slice(0, -1)
 

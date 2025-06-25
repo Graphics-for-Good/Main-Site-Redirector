@@ -1,19 +1,24 @@
 ---
+import redirectAway from '../scripts/redirectAway.js'
+const res = await redirectAway()
+if (res) {
+    return Astro.redirect('https://google.com')
+}
+
 var newSite = 'https://graphics-for-good.wixsite.com/graphics-for-good'
 
-var path = "/work/baks-bytes"
+var path = '/work/baks-bytes'
 if (path) newSite += path
-
-const scriptTag = `<script>var newSite = '${newSite}'</script>`;
 ---
 <head>
     <meta http-equiv="refresh" content={`1; url=${newSite}`}>
     <title>Baks Bytes | Graphics For Good</title>
-    <meta type="description" content="Baks BytesClient:​Year:24-25Designer 1:BeatrizDesigner 2:​This is placeholder text. To change this content  double-click on the element and click Change Content. To manage all your collections  click on the Content Manager button in the Add panel on the left.PreviousNext" />
+    <meta name="description" content={`Baks BytesClient:​Year:24-25Designer 1:BeatrizDesigner 2:​​PreviousNext`} />
     <link rel="icon" href="https://www.wix.com/favicon.ico" />
 </head>
-<body set:html={scriptTag} />
-<script>
+<script data-site={newSite}>
+    const newSite = document.currentScript.dataset.site
+
     if (newSite.startsWith('/')) newSite = newSite.slice(1)
     if (newSite.endsWith('/')) newSite = newSite.slice(0, -1)
 

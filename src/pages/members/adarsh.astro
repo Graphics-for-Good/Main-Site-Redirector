@@ -1,19 +1,24 @@
 ---
+import redirectAway from '../scripts/redirectAway.js'
+const res = await redirectAway()
+if (res) {
+    return Astro.redirect('https://google.com')
+}
+
 var newSite = 'https://graphics-for-good.wixsite.com/graphics-for-good'
 
-var path = "/members/adarsh"
+var path = '/members/adarsh'
 if (path) newSite += path
-
-const scriptTag = `<script>var newSite = '${newSite}'</script>`;
 ---
 <head>
     <meta http-equiv="refresh" content={`1; url=${newSite}`}>
     <title>Adarsh Kumar | Graphics For Good</title>
-    <meta type="description" content="< BackAdarsh Kumarakumar25@dtechhs.orgBay AreaAdarsh Kumar is a Senior at Design Tech High School in Redwood City and a Member of Graphics for Good. He enjoys playing the piano  coding  and video games.PortfolioPreviousNext" />
+    <meta name="description" content={`< BackAdarsh Kumarakumar25@dtechhs.orgBay AreaAdarsh Kumar is a part of the Design Tech High School graduating class of 2025 and graduated in June of 2025. He was The Website Manager for Graphics for Good. He enjoys playing the piano coding and video games.PortfolioPreviousNext`} />
     <link rel="icon" href="https://www.wix.com/favicon.ico" />
 </head>
-<body set:html={scriptTag} />
-<script>
+<script data-site={newSite}>
+    const newSite = document.currentScript.dataset.site
+
     if (newSite.startsWith('/')) newSite = newSite.slice(1)
     if (newSite.endsWith('/')) newSite = newSite.slice(0, -1)
 

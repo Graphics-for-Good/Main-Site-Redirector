@@ -1,19 +1,24 @@
 ---
+import redirectAway from '../scripts/redirectAway.js'
+const res = await redirectAway()
+if (res) {
+    return Astro.redirect('https://google.com')
+}
+
 var newSite = 'https://graphics-for-good.wixsite.com/graphics-for-good'
 
-var path = "/members/luce"
+var path = '/members/luce'
 if (path) newSite += path
-
-const scriptTag = `<script>var newSite = '${newSite}'</script>`;
 ---
 <head>
     <meta http-equiv="refresh" content={`1; url=${newSite}`}>
     <title>Luce Dittrich | Graphics For Good</title>
-    <meta type="description" content="< BackLuce Dittrichldittrich26@dtechhs.orgBay AreaLuce Dittrich is a Junior at Design Tech High School in Redwood City and a Member of Graphics for Good.PortfolioPreviousNext" />
+    <meta name="description" content={`< BackLuce Dittrichldittrich26@dtechhs.orgBay AreaLuce Dittrich is a Junior at Design Tech High School in Redwood City and a Member of Graphics for Good.PortfolioPreviousNext`} />
     <link rel="icon" href="https://www.wix.com/favicon.ico" />
 </head>
-<body set:html={scriptTag} />
-<script>
+<script data-site={newSite}>
+    const newSite = document.currentScript.dataset.site
+
     if (newSite.startsWith('/')) newSite = newSite.slice(1)
     if (newSite.endsWith('/')) newSite = newSite.slice(0, -1)
 

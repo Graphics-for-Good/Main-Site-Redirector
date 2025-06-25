@@ -1,19 +1,24 @@
 ---
+import redirectAway from '../scripts/redirectAway.js'
+const res = await redirectAway()
+if (res) {
+    return Astro.redirect('https://google.com')
+}
+
 var newSite = 'https://graphics-for-good.wixsite.com/graphics-for-good'
 
-var path = "/members/robin"
+var path = '/members/robin'
 if (path) newSite += path
-
-const scriptTag = `<script>var newSite = '${newSite}'</script>`;
 ---
 <head>
     <meta http-equiv="refresh" content={`1; url=${newSite}`}>
     <title>Robin Solis-Rodriguez | Graphics For Good</title>
-    <meta type="description" content="< BackRobin Solis-Rodriguezmsolisrodriguez26@dtechhs.orgBay AreaRobin Solis-Rodriguez is a Junior at Design Tech High School in Redwood City and a Member of Graphics for Good. When not out on a boat  they like drawing  playing card games  and watching movies.PortfolioPreviousNext" />
+    <meta name="description" content={`< BackRobin Solis-Rodriguezmsolisrodriguez26@dtechhs.orgBay AreaRobin Solis-Rodriguez is a Junior at Design Tech High School in Redwood City and the Social Media Manager for Graphics for Good. When not out on a boat they like drawing playing card games and watching movies.PortfolioPreviousNext`} />
     <link rel="icon" href="https://www.wix.com/favicon.ico" />
 </head>
-<body set:html={scriptTag} />
-<script>
+<script data-site={newSite}>
+    const newSite = document.currentScript.dataset.site
+
     if (newSite.startsWith('/')) newSite = newSite.slice(1)
     if (newSite.endsWith('/')) newSite = newSite.slice(0, -1)
 

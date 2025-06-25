@@ -6,31 +6,28 @@ import * as cheerio from 'cheerio';
 import { JSDOM } from 'jsdom'
 
  
-var template = fs.readFileSync('./astro.template', 'utf8')
-var existingFiles = fs.readdirSync('./src/pages')
+var template = fs.readFileSync('./src/pages/_template.astro', 'utf-8')
+var filesExist = fs.existsSync('./src/pages')
 
 var nSite = 'https://graphics-for-good.wixsite.com/graphics-for-good'
 var fName = 'sitemap.xml'
 var sitemap = `${nSite}/${fName}`
 
-async function fetchPaths() {
-    var response = await fetch(sitemap)
+async function fetchSiteMap(path, name) {
+    var response = await fetch(path)
     var text = await response.text()
     
-    fs.writeFileSync(`./public/${fName}`, text)
+    fs.writeFileSync(`./public/${name}`, text)
 
     const parser = new XMLParser();
     const json = parser.parse(text);
 
-    var nestedSitemaps = json.sitemapindex.sitemap
+    return json
+}
 
-    existingFiles.forEach(file => {
-        if (file !== '404.astro') {
-            if (!fs.lstatSync(`./src/pages/${file}`).isDirectory()) {
-                fs.unlinkSync(`./src/pages/${file}`)
-            }
-        }
-    })
+async function fetchPaths() {
+    const json = await fetchSiteMap(sitemap, fName)
+    var nestedSitemaps = json.sitemapindex.sitemap
 
     nestedSitemaps.forEach(async nSitemap => {
         var nSitemapLoc = nSitemap.loc
@@ -38,13 +35,7 @@ async function fetchPaths() {
 
         if (sitemapName.startsWith(nSite)) sitemapName = sitemapName.slice(nSite.length)
         
-        var nResponse = await fetch(nSitemapLoc)
-        var nText = await nResponse.text()
-
-        fs.writeFileSync(`./public/${sitemapName}`, text)
-
-        const nParser = new XMLParser();
-        var nJson = nParser.parse(nText);
+        const nJson = await fetchSiteMap(nSitemapLoc, sitemapName)
 
         var urls = nJson.urlset.url
 
@@ -60,12 +51,12 @@ async function fetchPaths() {
             var document = pDom.window.document
             var head = document.head
 
-            var description = document.body.querySelector('.PAGES_CONTAINER')
-            description.querySelectorAll('script, style, meta, link, :empty').forEach(e => e.remove())
-
-            const $ = cheerio.load(description.innerHTML);
-            description = $.text()
-            description = description.replace(/[\n,\r,\r\n]+/g, ' ')
+            var description = ''
+            var description = document.body.querySelector('.PAGES_CONTAINER');
+            description.querySelectorAll('script, style, meta, link, :empty').forEach(e => e.remove());
+            description = description.textContent;
+            description = description.replaceAll('\n', ' ').replaceAll('\r', ' ').replace(/[\n,\r,\r\n]+/g, ' ');
+            while (description.includes('  ')) description = description.replaceAll('  ', ' ');
         
             var title = head.querySelector('title').textContent
             var icon = head.querySelector('link[rel="icon"]').href
@@ -75,9 +66,9 @@ async function fetchPaths() {
             if (path.startsWith('/')) path = path.slice(1)
             
             var nTemplate = template
-            nTemplate = nTemplate.replace("var path = ''", `var path = "/${path === 'index' ? '' : path}"`)
+            nTemplate = nTemplate.replace("var path = ''", `var path = '/${path === "index" ? "" : path}'`)
 
-            nTemplate = nTemplate.replace('</head>', `    <title>${title}</title>\n    <meta type="description" content="${description}" />\n    <link rel="icon" href="${icon}" />\n</head>`)
+            nTemplate = nTemplate.replace('</head>', `    <title>${title}</title>\n    <meta name="description" content={\`${description}\`} />\n    <link rel="icon" href="${icon}" />\n</head>`)
 
 
             var paths = []
@@ -95,9 +86,17 @@ async function fetchPaths() {
                 }
             })
 
+            if (filesExist && fs.existsSync(`./src/pages/${path}`) && !fs.lstatSync(`./src/pages/${path}`).isDirectory()) {
+                fs.unlinkSync(`./src/pages/${path}`)
+            }
+
             fs.writeFileSync(`./src/pages/${path}.astro`, nTemplate)
         })
     })
 }
 
 fetchPaths()
+
+function callDone() {return 'ran'}
+
+export default callDone

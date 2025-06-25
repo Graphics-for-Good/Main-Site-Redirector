@@ -1,19 +1,24 @@
 ---
+import redirectAway from '../scripts/redirectAway.js'
+const res = await redirectAway()
+if (res) {
+    return Astro.redirect('https://google.com')
+}
+
 var newSite = 'https://graphics-for-good.wixsite.com/graphics-for-good'
 
-var path = "/members/zach"
+var path = '/members/zach'
 if (path) newSite += path
-
-const scriptTag = `<script>var newSite = '${newSite}'</script>`;
 ---
 <head>
     <meta http-equiv="refresh" content={`1; url=${newSite}`}>
     <title>Zach Mager | Graphics For Good</title>
-    <meta type="description" content="< BackZach Magerimager28@dtechhs.orgBay AreaZach Mager is a Freshman at Design Tech High School in Redwood City and a Member of Graphics for Good. He likes drawing  watching TV shows  and sewing.PortfolioPreviousNext" />
+    <meta name="description" content={`< BackZach Magerimager28@dtechhs.orgBay AreaZach Mager is a Freshman at Design Tech High School in Redwood City and a Member of Graphics for Good. He likes drawing watching TV shows and sewing.PortfolioPreviousNext`} />
     <link rel="icon" href="https://www.wix.com/favicon.ico" />
 </head>
-<body set:html={scriptTag} />
-<script>
+<script data-site={newSite}>
+    const newSite = document.currentScript.dataset.site
+
     if (newSite.startsWith('/')) newSite = newSite.slice(1)
     if (newSite.endsWith('/')) newSite = newSite.slice(0, -1)
 
